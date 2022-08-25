@@ -9,4 +9,5 @@ public interface AccountService {
     public AccountDto createAccount(AccountDto transaction);
     public AccountDto updateAccountDetails(String accountId,AccountDto accountDto);
     public String deleteAccount(String accountId);
+    public List<AccountDto> getAccounts();
 }

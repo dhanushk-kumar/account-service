@@ -7,6 +7,9 @@ import com.maveric.accountservice.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.maveric.accountservice.constants.Constants.getCurrentDateTime;
 import static com.maveric.accountservice.utility.ModelDtoTransformer.toDto;
 import static com.maveric.accountservice.utility.ModelDtoTransformer.toEntity;
@@ -36,6 +39,17 @@ public class AccountServiceImpl implements AccountService{
         accountResult.setUpdatedAt(getCurrentDateTime());
         Account accountUpdated = repository.save(accountResult);
         return toDto(accountUpdated);
+    }
+
+    @Override
+    public List<AccountDto> getAccounts() {
+        List<Account> list= repository.findAll();
+        List<AccountDto> listDto = new ArrayList<AccountDto>(list.size());
+        for(Account account:list)
+        {
+            listDto.add(toDto(account));
+        }
+        return listDto;
     }
 
     @Override

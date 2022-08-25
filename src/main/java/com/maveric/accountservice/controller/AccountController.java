@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class AccountController {
@@ -28,5 +30,12 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@PathVariable String customerId,@PathVariable String accountId) {
         String result = accountService.deleteAccount(accountId);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("customer/{customerId}/accounts")
+    public ResponseEntity<List<AccountDto>> getAccounts(@PathVariable String customerId, @RequestParam(defaultValue = "0") Integer page,
+                                                        @RequestParam(defaultValue = "10") Integer pageSize) {
+        List<AccountDto> accountDtoResponse = accountService.getAccounts();
+        return new ResponseEntity<>(accountDtoResponse, HttpStatus.OK);
     }
 }
