@@ -37,4 +37,10 @@ public class AccountServiceImpl implements AccountService{
         Account accountUpdated = repository.save(accountResult);
         return toDto(accountUpdated);
     }
+
+    @Override
+    public String deleteAccount(String accountId) {
+        repository.deleteById(accountId);
+        return "Account deleted successfully.";
+    }
 }
