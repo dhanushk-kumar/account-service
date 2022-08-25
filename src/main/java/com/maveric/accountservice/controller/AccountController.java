@@ -38,4 +38,10 @@ public class AccountController {
         List<AccountDto> accountDtoResponse = accountService.getAccounts();
         return new ResponseEntity<>(accountDtoResponse, HttpStatus.OK);
     }
+
+    @GetMapping("customer/{customerId}/accounts/{accountId}")
+    public ResponseEntity<AccountDto> getAccountDetails(@PathVariable String customerId,@PathVariable String accountId) {
+        AccountDto accountDtoResponse = accountService.getAccountDetailsById(accountId);
+        return new ResponseEntity<>(accountDtoResponse, HttpStatus.OK);
+    }
 }

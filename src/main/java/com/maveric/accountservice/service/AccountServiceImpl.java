@@ -57,4 +57,9 @@ public class AccountServiceImpl implements AccountService{
         repository.deleteById(accountId);
         return "Account deleted successfully.";
     }
+    @Override
+    public AccountDto getAccountDetailsById(String accountId) {
+        Account accountResult=repository.findById(accountId).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        return toDto(accountResult);
+    }
 }
