@@ -1,6 +1,7 @@
 package com.maveric.accountservice.service;
 
 import com.maveric.accountservice.dto.AccountDto;
+import com.maveric.accountservice.exception.AccountNotFoundException;
 import com.maveric.accountservice.model.Account;
 import com.maveric.accountservice.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,17 @@ public class AccountServiceImpl implements AccountService{
         Account account = toEntity(accountDto);
         Account accountResult = repository.save(account);
         return  toDto(accountResult);
+    }
+
+    @Override
+    public AccountDto updateAccountDetails(String accountId, AccountDto accountDto) {
+        Account accountResult=repository.findById(accountId).orElseThrow(() -> new AccountNotFoundException("Account not found"));
+        accountResult.set_id(accountResult.get_id());
+        accountResult.setCustomerId(accountDto.getCustomerId());
+        accountResult.setType(accountDto.getType());
+        accountResult.setCreatedAt(accountResult.getCreatedAt());
+        accountResult.setUpdatedAt(getCurrentDateTime());
+        Account accountUpdated = repository.save(accountResult);
+        return toDto(accountUpdated);
     }
 }
